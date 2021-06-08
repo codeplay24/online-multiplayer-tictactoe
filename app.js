@@ -9,7 +9,6 @@ const app = express()
 const server = http.createServer(app)
 const io = Socket(server)
 
-console.log('helrajkf');
 
 const excPath = path.join(__dirname,'/public')
 
@@ -19,6 +18,7 @@ app.set('view engine', 'ejs')
 app.use(express.static(excPath))
 
 app.get('/' , (req,res)=>{
+    console.log('in home browser')
     res.render('home')
 })
 
