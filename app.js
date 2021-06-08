@@ -9,7 +9,11 @@ const app = express()
 const server = http.createServer(app)
 const io = Socket(server)
 
+console.log('helrajkf');
+
 const excPath = path.join(__dirname,'/public')
+
+const PORT = process.env.port || 5500
 
 app.set('view engine', 'ejs')
 app.use(express.static(excPath))
@@ -41,6 +45,6 @@ io.on('connection', (socket)=>{
     })
 })
 
-server.listen(5500, ()=>{
+server.listen(PORT, ()=>{
     console.log('server running');
 })
