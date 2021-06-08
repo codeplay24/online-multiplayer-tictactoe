@@ -1,0 +1,60 @@
+.cellClass{
+    /*padding: 40px;*/
+    border: 4px;
+    border-color: #bb5555;
+    border-style: solid;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    text-align: center;
+}
+#game-board{
+    position: absolute;
+    left: 300px;
+}
+
+/*top cells*/
+
+#cell01{
+    left: 82px;
+}
+#cell02{
+    left:164px;
+}
+
+/* middle cells*/
+
+#cell10{
+    top: 82px;
+}
+#cell11{
+    left: 82px;
+    top: 82px;
+}
+#cell12{
+    left:164px;
+    top: 82px;
+}
+
+/* bottom cells */
+#cell20{
+    top: 164px;
+}
+#cell21{
+    top:164px;
+    left: 82px;
+}
+#cell22{
+    top: 164px;
+    left: 164px;
+}
+#game-over{
+    text-align: center;
+    border-color: white;
+    top: 264px;
+    width: 240px;
+}
+#refresh-button{
+    position: absolute;
+    top:344px;
+}
