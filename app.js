@@ -12,7 +12,7 @@ const io = Socket(server)
 
 const excPath = path.join(__dirname,'/public')
 
-const PORT = process.env.port || 5500
+const PORT = process.env.PORT || 5500
 
 app.set('view engine', 'ejs')
 app.use(express.static(excPath))
