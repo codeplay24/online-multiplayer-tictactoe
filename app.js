@@ -33,9 +33,8 @@ app.get('/room/:id', (req,res)=>{
 io.on('connection', (socket)=>{
     socket.on('join-room', (roomId)=>{
         socket.join(roomId)
-        //map.socket.id = roomId
         map[socket.id] = roomId
-        //console.log(socket.id)
+        socket.broadcast.to(roomId).emit('newJoinee', socket.id)
     })
     socket.emit('connected')
     socket.on('played', (row, col)=>{

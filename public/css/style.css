@@ -58,3 +58,8 @@
     position: absolute;
     top:344px;
 }
+#message-box{
+    position: absolute;
+    left: 400px;
+    width: 400px;
+}

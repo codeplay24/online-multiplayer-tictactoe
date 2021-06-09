@@ -9,6 +9,7 @@ const cell21 = document.getElementById("cell21")
 const cell22 = document.getElementById("cell22")
 const gamedone = document.getElementById('game-over')
 const refresh = document.getElementById('refresh-button')
+const messages = document.getElementById('messages')
 const socket = io()
 
 let HITS = 0;
@@ -428,4 +429,8 @@ socket.on('opponentPlayed', (row,col)=>{
 
 socket.on('refresh', ()=>{
     refreshMethod(true)
+})
+
+socket.on('newJoinee', (socketId)=>{
+    messages.innerHTML = messages.innerHTML + "\n" + `<p>${socketId} has joined the game.</p>`
 })
