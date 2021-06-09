@@ -11,6 +11,7 @@
 #game-board{
     position: absolute;
     left: 300px;
+    margin-top: 2cm;
 }
 
 /*top cells*/
@@ -60,6 +61,6 @@
 }
 #message-box{
     position: absolute;
-    left: 400px;
+    left: 300px;
     width: 400px;
 }
