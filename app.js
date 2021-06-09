@@ -43,6 +43,10 @@ io.on('connection', (socket)=>{
         //socket.broadcast.emit('opponentPlayed', row,col)
         socket.broadcast.to(roomId).emit('opponentPlayed', row,col)
     })
+    socket.on('opponent_refreshed', ()=>{
+        const roomId = map[socket.id]
+        socket.broadcast.to(roomId).emit('refresh')
+    })
 })
 
 server.listen(PORT, ()=>{

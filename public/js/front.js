@@ -48,7 +48,7 @@ const cell00Event = ()=>{
     cell00.innerHTML = "<h1>"+char+"</h1>"
     matrix[0][0] = char
     if(check(0,0)){
-        killTheGame()
+        killTheGame(opponentsMove)
     }
     if(!opponentsMove){
         socket.emit('played', 0,0)
@@ -75,7 +75,7 @@ const cell01Event = ()=>{
     cell01.innerHTML = "<h1>"+char+"</h1>"
     matrix[0][1] = char
     if(check(0,1)){
-        killTheGame()
+        killTheGame(opponentsMove)
     }
     if(!opponentsMove){
         socket.emit('played', 0,1)
@@ -102,7 +102,7 @@ const cell02Event = ()=>{
     cell02.innerHTML="<h1>"+char+"</h1>"
     matrix[0][2] = char
     if(check(0,2)){
-        killTheGame()
+        killTheGame(opponentsMove)
     }
     if(!opponentsMove){
         socket.emit('played', 0,2)
@@ -129,7 +129,7 @@ const cell10Event = ()=>{
     cell10.innerHTML = "<h1>"+char+"</h1>"
     matrix[1][0] = char
     if(check(1,0)){
-        killTheGame()
+        killTheGame(opponentsMove)
     }
     if(!opponentsMove){
         socket.emit('played', 1,0)
@@ -156,7 +156,7 @@ const cell11Event = ()=>{
     cell11.innerHTML = "<h1>"+char+"</h1>"
     matrix[1][1] = char
     if(check(1,1)){
-        killTheGame()
+        killTheGame(opponentsMove)
     }
     if(!opponentsMove){
         socket.emit('played', 1,1)
@@ -183,7 +183,7 @@ const cell12Event = ()=>{
     cell12.innerHTML = "<h1>"+char+"</h1>"
     matrix[1][2] = char
     if(check(1,2)){
-        killTheGame()
+        killTheGame(opponentsMove)
     }
     if(!opponentsMove){
         socket.emit('played', 1,2)
@@ -210,7 +210,7 @@ const cell20Event = ()=>{
     cell20.innerHTML = "<h1>"+char+"</h1>"
     matrix[2][0] = char
     if(check(2,0)){
-        killTheGame()
+        killTheGame(opponentsMove)
     }
     if(!opponentsMove){
         socket.emit('played', 2,0)
@@ -237,7 +237,7 @@ const cell21Event = ()=>{
     cell21.innerHTML = "<h1>"+char+"</h1>"
     matrix[2][1] = char
     if(check(2,1)){
-        killTheGame()
+        killTheGame(opponentsMove)
     }
     if(!opponentsMove){
         socket.emit('played', 2,1)
@@ -264,7 +264,7 @@ const cell22Event = ()=>{
     cell22.innerHTML = "<h1>"+char+"</h1>"
     matrix[2][2] = char
     if(check(2,2)){
-        killTheGame()
+        killTheGame(opponentsMove)
     }
     if(!opponentsMove){
         socket.emit('played', 2,2)
@@ -335,12 +335,18 @@ const rDig = ()=>{
     return false
 }
 
-const killTheGame = ()=>{
+const killTheGame = (opponentsMove)=>{
+    
     gameover = true
-    gamedone.innerHTML = "<h1>GAME OVER</h1>"
+    if(opponentsMove){
+        gamedone.innerHTML = "<h1>YOU LOST :(</h1>"
+    }else{
+        gamedone.innerHTML = "<h1>YOU WON !!!!</h1>"
+    }
+    
 }
 
-const refreshMethod = ()=>{
+const refreshMethod = (opponentRefreshed)=>{
     matrix = [['','',''],['','',''],['','','']]
     cell00.innerHTML = "<h1></h1>"
     cell01.innerHTML = "<h1></h1>"
@@ -365,7 +371,9 @@ const refreshMethod = ()=>{
     HITS = 0
     opponentsMove = false
     playedOnce = false
-
+    if(!opponentRefreshed){
+        socket.emit('opponent_refreshed')
+    }
 }
 
 cell00.addEventListener('click', cell00Event)
@@ -416,4 +424,8 @@ socket.on('opponentPlayed', (row,col)=>{
     if(row===2 && col===2){
         cell22Event()
     }
+})
+
+socket.on('refresh', ()=>{
+    refreshMethod(true)
 })
