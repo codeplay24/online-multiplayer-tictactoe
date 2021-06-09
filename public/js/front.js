@@ -429,7 +429,8 @@ socket.on('opponentPlayed', (row,col)=>{
 
 socket.on('refresh', ()=>{
     refreshMethod(true)
-    messages.innerHTML = messages.innerHTML + "\n" + "opponent refreshed the game."
+    console.log('opponrtjk');
+    messages.innerHTML = messages.innerHTML + "\n" + "<p>opponent refreshed the game.</p>"
 })
 
 socket.on('newJoinee', (socketId)=>{
