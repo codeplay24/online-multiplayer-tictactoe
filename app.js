@@ -18,7 +18,6 @@ app.set('view engine', 'ejs')
 app.use(express.static(excPath))
 
 app.get('/' , (req,res)=>{
-    console.log('in home browser')
     res.render('home')
 })
 
@@ -26,6 +25,13 @@ app.post('/create' , (req,res)=>{
     res.redirect(`/room/${uuidv4()}`)
 })
 
+app.post('/offline', (req,res)=>{
+    res.redirect('/offlinegame')
+})
+
+app.get('/offlinegame', (req,res)=>{
+    res.render('offlineGameBoard')
+})
 app.get('/room/:id', (req,res)=>{
     res.render('game', {roomId:req.params.id})
 })
