@@ -7,6 +7,7 @@ const cell12 = document.getElementById("cell12")
 const cell20 = document.getElementById("cell20")
 const cell21 = document.getElementById("cell21")
 const cell22 = document.getElementById("cell22")
+const offlineButton = document.getElementById("offlineButton")
 const gamedone = document.getElementById('game-over')
 const refresh = document.getElementById('refresh-button')
 const messages = document.getElementById('messages')
@@ -30,6 +31,7 @@ let matrix = [['','',''],['','',''],['','','']]
 
 
 const cell00Event = ()=>{
+    console.log('click cking');
     if(chg00 || gameover || playedOnce){
         return
     }
@@ -337,12 +339,11 @@ const rDig = ()=>{
 }
 
 const killTheGame = (opponentsMove)=>{
-    
     gameover = true
     if(opponentsMove){
-        gamedone.innerHTML = "<h1>YOU LOST :(</h1>"
+        gamedone.innerHTML = "<h1 style='color:red;'>YOU LOST :(</h1>"
     }else{
-        gamedone.innerHTML = "<h1>YOU WON !!!!</h1>"
+        gamedone.innerHTML = "<h1 style='color:green;'>YOU WON !!!!</h1>"
     }
     
 }
@@ -436,3 +437,4 @@ socket.on('refresh', ()=>{
 socket.on('newJoinee', (socketId)=>{
     messages.innerHTML = messages.innerHTML + "\n" + `<p>${socketId} has joined the game.</p>`
 })
+

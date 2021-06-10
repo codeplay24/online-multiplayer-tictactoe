@@ -261,7 +261,7 @@ const killTheGame = ()=>{
     gameover = true
     gamedone.style.width = "300px"
     gamedone.style.left = "-13px"
-    gamedone.innerHTML = "<h1>SOMEONE WON !!!</h1>"
+    gamedone.innerHTML = "<h1 style='color:green;'>SOMEONE WON !!!</h1>"
     
 }
 
