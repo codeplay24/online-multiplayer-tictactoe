@@ -40,7 +40,7 @@ io.on('connection', (socket)=>{
     socket.on('join-room', (roomId)=>{
         socket.join(roomId)
         map[socket.id] = roomId
-        socket.broadcast.to(roomId).emit('newJoinee', socket.id)
+        socket.broadcast.to(roomId).emit('newJoinee')
     })
     socket.emit('connected')
     socket.on('played', (row, col)=>{
@@ -51,6 +51,17 @@ io.on('connection', (socket)=>{
     socket.on('opponent_refreshed', ()=>{
         const roomId = map[socket.id]
         socket.broadcast.to(roomId).emit('refresh')
+    })
+    socket.on('setName', (name)=>{
+        socket.data.username = name
+    })
+    socket.on('spreadWin', ()=>{
+        const roomId = map[socket.id]
+        io.to(roomId).emit('setWinner', socket.data.username)
+    })
+    socket.on('sendMessageToServer' , (message)=>{
+        const roomId = map[socket.id]
+        socket.broadcast.to(roomId).emit('newMessage',socket.data.username, message)
     })
 })
 

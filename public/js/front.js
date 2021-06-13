@@ -11,6 +11,9 @@ const offlineButton = document.getElementById("offlineButton")
 const gamedone = document.getElementById('game-over')
 const refresh = document.getElementById('refresh-button')
 const messages = document.getElementById('messages')
+const getNameInput = document.getElementById('nameText')
+const messageString = document.getElementById('input-text')
+
 const socket = io()
 
 let HITS = 0;
@@ -31,7 +34,6 @@ let matrix = [['','',''],['','',''],['','','']]
 
 
 const cell00Event = ()=>{
-    console.log('click cking');
     if(chg00 || gameover || playedOnce){
         return
     }
@@ -344,6 +346,7 @@ const killTheGame = (opponentsMove)=>{
         gamedone.innerHTML = "<h1 style='color:red;'>YOU LOST :(</h1>"
     }else{
         gamedone.innerHTML = "<h1 style='color:green;'>YOU WON !!!!</h1>"
+        socket.emit('spreadWin')
     }
     
 }
@@ -396,6 +399,25 @@ socket.on('connected', ()=>{
 
 socket.emit('join-room', ROOMID)
 
+const setNameFunction = ()=>{
+    const name = getNameInput.value
+    socket.emit('setName', name)
+    getNameInput.value = ''
+}
+
+const sendMessage = ()=>{
+    const stringValue = messageString.value
+    if(stringValue===''){
+        return
+    }
+    socket.emit('sendMessageToServer', stringValue)
+    messages.innerHTML = messages.innerHTML + `<p>You: ${stringValue}</p>`
+    messageString.value = ''
+    messages.scrollTop = messages.scrollHeight;
+}
+
+//ALL SOCKET.ON FUNCTIONS GOES HERE
+
 socket.on('opponentPlayed', (row,col)=>{
     opponentsMove = true
     playedOnce = false
@@ -413,7 +435,7 @@ socket.on('opponentPlayed', (row,col)=>{
     }
     if(row===1 && col===1){
         cell11Event()
-    }
+    }    
     if(row===1 && col===2){
         cell12Event()
     }
@@ -428,13 +450,39 @@ socket.on('opponentPlayed', (row,col)=>{
     }
 })
 
-socket.on('refresh', ()=>{
+socket.on('refresh', (name)=>{
     refreshMethod(true)
-    console.log('opponrtjk');
-    messages.innerHTML = messages.innerHTML + "\n" + "<p>opponent refreshed the game.</p>"
+    if(!name){
+        messages.innerHTML = messages.innerHTML + "\n" + "<p>opponent refreshed the game.</p>"
+    }else{
+        messages.innerHTML = messages.innerHTML + "\n" + `<p>${name} refreshed the game.</p>`
+    }
+    messages.scrollTop = messages.scrollHeight;
+    
 })
 
-socket.on('newJoinee', (socketId)=>{
-    messages.innerHTML = messages.innerHTML + "\n" + `<p>${socketId} has joined the game.</p>`
+socket.on('newJoinee', ()=>{
+     messages.innerHTML = messages.innerHTML + "\n" + `<p>opponent has joined the game.</p>`
+     messages.scrollTop = messages.scrollHeight;
 })
+
+socket.on('setWinner', (name)=>{
+    if(!name){
+        messages.innerHTML = messages.innerHTML + `<p>opponet won this round</p>`
+    }else{
+        messages.innerHTML = messages.innerHTML + "\n" + `<p>${name} has won this round</p>`
+    }
+    messages.scrollTop = messages.scrollHeight;
+
+})
+
+socket.on('newMessage', (username, message)=>{
+    if(!username){
+        messages.innerHTML = messages.innerHTML + `<p>Opponent: ${message}</p>`
+    }else{
+        messages.innerHTML = messages.innerHTML + `<p>${username}: ${message}</p>`
+    }
+    messages.scrollTop = messages.scrollHeight;
+})
+
 

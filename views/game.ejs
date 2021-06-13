@@ -13,6 +13,10 @@
     </script>
 </head>
 <body>
+    <div id="get-name">
+        <input type="text" id="nameText">
+        <br><br><button onclick="setNameFunction()">set name</button>
+    </div>
     
     <div id="game-board">
         <div id="cell00" class="cellClass">
@@ -46,8 +50,14 @@
         </div>
         <button id="refresh-button" onclick="refreshMethod(false)">REFRESH</button>
         <div id="message-box">
-            <h3>MESSAGES</h3>
-            <div id="messages">
+            <h3 style="text-align: center;">MESSAGES</h3>
+            <div id="message-element">
+                <div id="messages">
+                </div>
+                <div id="textfield">
+                    <input type="text" name="" id="input-text">
+                    <button id="sendButton" onclick="sendMessage()">send</button>
+                </div>
             </div>
         </div>
     </div>
